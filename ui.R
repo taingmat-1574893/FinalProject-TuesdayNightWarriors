@@ -58,7 +58,7 @@ shinyUI(fluidPage(
                     value = c(200,500)),
         sliderInput("cpu", "CPU:",
                     min = 0, max = 8,
-                    value = 0),
+                    value = c(0, 8)),
         sliderInput("internalmem", "Internal Memory:",
                     min = 1, max = 1000, # change to dates
                     value = c(200,500)),

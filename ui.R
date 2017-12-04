@@ -9,6 +9,7 @@ library(shinyjs)
 # #Data setup
 phone_data <- read.csv("Data/phone_dataset.csv", quote = "", row.names = NULL, stringsAsFactors = FALSE)
 
+  
 #Start of UI
 shinyUI(fluidPage(
 
@@ -22,34 +23,33 @@ shinyUI(fluidPage(
        title = "Phone finder"),
      dashboardSidebar(
         useShinyjs(),
-        width = 325,
-        selectizeInput("brand_list", "Brand:", choices = list("a", "b", "c", "d"),
+        width = 300,
+        
+        selectizeInput("brand_list", "Brand:", choices = phone_data$brand,
         multiple = TRUE,
-        options = list(maxItems = 4),
-        selected = list("a", "b", "c")
+        options = list(maxItems = 4)
         ), 
         
         useShinyjs(),
-        selectizeInput("display_type", "Display type:", choices = list("a", "b", "c", "d"),
+        selectizeInput("display_type", "Display type:", choices = phone_data$display_type,
                        multiple = TRUE,
-                       options = list(maxItems = 4),
-                       selected = list("a", "b", "c")
+                       options = list(maxItems = 4)
         ),
-        selectizeInput("os", "Overhead OS:", choices = list("a", "b", "c", "d"),
+        selectizeInput("os", "Overhead OS:", choices = phone_data$OS,
                        multiple = TRUE,
                        options = list(maxItems = 4),
                        selected = list("a", "b", "c")
         ), 
-        selectizeInput("sim", "Sim:", choices = list("a", "b", "c", "d"),
+        selectizeInput("sim", "Sim:", choices = phone_data$SIM,
                        multiple = TRUE,
                        options = list(maxItems = 4),
                        selected = list("a", "b", "c")
         ),
-        selectizeInput("bluetooth", "Bluetooth", choices = list("a", "b", "c", "d"),
+        selectizeInput("bluetooth", "Bluetooth", choices = phone_data$bluetooth,
                        multiple = TRUE,
                        options = list(maxItems = 4),
                        selected = list("a", "b", "c")),
-        selectizeInput("usb", "USB", choices = list("a", "b", "c", "d"),
+        selectizeInput("usb", "USB", choices = phone_data$USB,
                        multiple = TRUE,
                        options = list(maxItems = 4),
                        selected = list("a", "b", "c")),
@@ -57,7 +57,7 @@ shinyUI(fluidPage(
                     min = 1, max = 1000, # change to dates
                     value = c(200,500)),
         sliderInput("cpu", "CPU:",
-                    min = 0, max = 8,
+                    min = 1, max = 1000,
                     value = c(0, 8)),
         sliderInput("internalmem", "Internal Memory:",
                     min = 1, max = 1000, # change to dates
@@ -78,7 +78,7 @@ shinyUI(fluidPage(
      ),
      
      dashboardBody(
-         # this is now the main panel                         
+        p("this is the main panel")                         
         #actionButton("showSidebar", "Show sidebar"),
         #actionButton("hideSidebar", "Hide sidebar")
       )

@@ -86,13 +86,5 @@ shinyUI(fluidPage(
   )
 )
 
-server <-function(input, output) {
-  observeEvent(input$showSidebar, {
-    shinyjs::removeClass(selector = "body", class = "sidebar-collapse")
-  })
-  observeEvent(input$hideSidebar, {
-    shinyjs::addClass(selector = "body", class = "sidebar-collapse")
-  })
-}
 
 #shinyApp(ui, server)

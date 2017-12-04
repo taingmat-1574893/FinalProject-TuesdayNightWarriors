@@ -5,10 +5,20 @@ library(stringi)
 
 #DATA <- read.csv("/Users/mikiaslema/Documents/INFO201/Projects/FinalProject/FinalProject-TuesdayNightWarriors/Data/phone_dataset.csv", quote = "", row.names = NULL, stringsAsFactors = FALSE)
 
+GreaterThan50NA <- function(number) {
+  if(number > 50) {
+    return(NA)
+  }
+  else {
+    return(number)
+  }
+}
+
 DATA <- read.csv("Data/phone_dataset.csv", quote = "", row.names = NULL, stringsAsFactors = FALSE)
 
-ModifiedData <- DATA[, -which(names(DATA) %in% c("status", "weight_oz"))]
-
+ModifiedData <- DATA[, -which(names(DATA) %in% c("status", "weight_oz"))] %>% 
+  mutate(CPU = gsub('4x', "", CPU), CPU = gsub('2x', "", CPU), CPU = gsub('3x', "", CPU))
+  
 PrimaryJustMP <- as.numeric(stri_extract_first_regex(ModifiedData$primary_camera, "[0.0-9.0]+"))
 
 SecondaryJustMP <- as.numeric(stri_extract_first_regex(ModifiedData$secondary_camera, "[0.0-9.0]+"))
@@ -19,13 +29,14 @@ MemoryCard <- as.numeric(stri_extract_first_regex(ModifiedData$memory_card, "[0.
 
 BatteryMPH <- as.numeric(stri_extract_first_regex(ModifiedData$battery, "[0.0-9.0]+"))
 
-phone_data <- ModifiedData %>%  
+internalMem <- as.numeric(stri_extract_last_regex(ModifiedData$internal_memory, "[0.0-9.0]+"))
+
+phone_data <- ModifiedData  %>%  
   mutate("Primary_Camera_MP"= PrimaryJustMP) %>% 
   mutate ("Secondry_Camera_MP" = SecondaryJustMP) %>% 
   mutate("CPU_GHz"=CpuGHz) %>% 
   mutate("Memory_Card_GB"=MemoryCard) %>% 
-  mutate("Battery_MPH"=BatteryMPH)
+  mutate("Battery_MPH"=BatteryMPH) 
 
-
-
-
+test <- ModifiedData %>% 
+  mutate("Primary_Camera_MP" = PrimaryJustMP)

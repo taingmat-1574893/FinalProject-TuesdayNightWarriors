@@ -48,11 +48,28 @@ shinyUI(fluidPage(
       sliderInput("cpu", "CPU:",
                   min = 0, max = 8,
                   value = 0),
+      sliderInput("internalmem", "Internal Memory:",
+                  min = 1, max = 1000, # change to dates
+                  value = c(200,500)),
+      sliderInput("ram", "Ram:",
+                  min = 1, max = 1000, # change to dates
+                  value = c(200,500)),
+      sliderInput("primarymb", "Primary-MP:",
+                  min = 1, max = 1000, # change to dates
+                  value = c(200,500)),
+      sliderInput("secondarymb", "Secondary-MP:",
+                  min = 1, max = 1000, # change to dates
+                  value = c(200,500)),
+      sliderInput("price", "Approx. Price:",
+                  min = 1, max = 1000, # change to dates
+                  value = c(200,500)),
     
       #Allows user to select a trait to compare by 
-       selectInput("trait", h3("choices"), 
-                        choices = list("a", "b"), 
-                        selected = "a")
+      selectizeInput("boolean", "Boolean filter", choices = list("Expandable memory card", "Sensors", "GPS", "NFC", "Loud speaker", "Audio jack"), 
+                     multiple = TRUE, 
+                     options = list(maxItems = 4), 
+                     selected = list("Expandable memory card"))
+      
 
     ),
   

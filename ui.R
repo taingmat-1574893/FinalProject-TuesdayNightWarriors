@@ -31,7 +31,7 @@ shinyUI(fluidPage(
         options = list(maxItems = 4)
         ), 
         
-        phone_data <- phone_data[phone_data$brand == "brand",],
+        #phone_data <- phone_data[phone_data$brand == "brand",],
         
         useShinyjs(),
         #display_type(done)(subject to removal)

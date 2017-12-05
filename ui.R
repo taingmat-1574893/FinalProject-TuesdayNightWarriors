@@ -20,16 +20,18 @@ shinyUI(fluidPage(
      skin = "purple",
      
      dashboardHeader(
-       title = "Phone finder"),
+       title = "Phone Finder"),
      dashboardSidebar(
         useShinyjs(),
         width = 300,
         
         #Brand(done)
-        selectizeInput("brand_list", "Brand:", choices = phone_data$brand,
+        selectizeInput("brand", "Brand:", choices = phone_data$brand,
         multiple = TRUE,
         options = list(maxItems = 4)
         ), 
+        
+        phone_data <- phone_data[phone_data$brand == "brand",],
         
         useShinyjs(),
         #display_type(done)(subject to removal)

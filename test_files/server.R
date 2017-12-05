@@ -115,14 +115,22 @@ shinyServer(function(input, output) {
     if(input$secondary_cam != 0) {
     phone_data <- phone_data[phone_data$Secondary_Camera_MP >= input$secondary_cam, ]
     }
-    
-    #if (input$bluetooth == TRUE) {
-    #  phone_data <- phone_data[phone_data$bluetooth == "Yes",]
-    #}
-    
-   # phone_data <- phone_data[phone_data$ == "Yes",]
-    #phone_data <- phone_data[phone_data$bluetooth == "Yes",]
-    
+
+    if (input$bluetooth == TRUE) {
+      phone_data <- phone_data[phone_data$bluetooth == "Yes",]
+    }
+    if (input$gps == TRUE) {
+      phone_data <- phone_data[phone_data$GPS == "Yes",]
+    }
+    if (input$nfc == TRUE) {
+      phone_data <- phone_data[phone_data$NFC == "Yes",]
+    }
+    if (input$audiojack == TRUE) {
+      phone_data <- phone_data[phone_data$audio_jack == "Yes",]
+    }
+    if (input$loudspeaker == TRUE) {
+      phone_data <- phone_data[phone_data$loud_speaker == "Yes",]
+    }
     
     # filter by model
     selectizeInput("model", "Model:",

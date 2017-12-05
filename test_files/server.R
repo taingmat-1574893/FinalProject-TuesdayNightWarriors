@@ -13,17 +13,19 @@ shinyServer(function(input, output) {
   output$choose_displaytype <- renderUI({
     
     #filter by brand
-    #data_sets <- data_sets[data_sets$brand == input$brand, ]
+    data_sets <- data_sets[data_sets$brand == input$brand, ]
     
-    selectizeInput("displaytype", "Display Type:",
-                   choices = data_sets$display_type,
+    selectizeInput("os", "OS:",
+                   choices = data_sets$OS,
                    multiple = TRUE
     )
-    
   })
   #----------------------------------
   output$choose_model <- renderUI({
-    data_sets <- data_sets[data_sets$display_type == input$displaytype, ]
+    data_sets <- data_sets[data_sets$brand == input$brand, ]
+    data_sets <- data_sets[data_sets$OS %in% input$os, ]
+    #data_sets <- data_sets[data_sets$OS ==, ]
+    #data_sets <- data_sets %>% filter(data_sets$OS %>% input$os)
     # filter by model
     selectizeInput("model", "Model:",
                    choices  = data_sets$model,

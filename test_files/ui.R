@@ -13,17 +13,26 @@ data_sets <- read.csv("Data/phone_dataset.csv", quote = "", row.names = NULL, st
 # Define UI for application that draws a histogram
 shinyUI(pageWithSidebar(
   
-  headerPanel(""),
+  headerPanel("test"),
   
   sidebarPanel(
+    # selectizeInput("brand", "Brand:", choices = data_sets$brand, 
+    #                multiple = TRUE,
+    #                options = list(maxItems = 4)),
+    # 
+    # data_test <- data_sets %>% filter(brand == "brand"),
+    # 
+    # selectizeInput("displaytype", "Display Type:", choices = data_sets[data_sets$brand == "brand", "displaytype"], 
+    #                multiple = TRUE,
+    #                options = list(maxItems = 4)),
+    
+    
     uiOutput("choose_brand"),
-    data_sets <- data_sets[data_sets$brand == "brand", ],
-    
+    #data_sets <- data_sets[data_sets$brand == "brand", ],
+
     uiOutput("choose_displaytype"),
-    
-    uiOutput("choose_model"),
-    br(),
-    a(href = "https://gist.github.com/4211337", "Source code")
+
+    uiOutput("choose_model")
   ),
   
   

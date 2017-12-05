@@ -8,7 +8,6 @@ library(shinyjs)
 
 # #Data setup
 source("FormatData.R")
-#phone_data <- read.csv("Data/phone_dataset.csv", quote = "", row.names = NULL, stringsAsFactors = FALSE)
 
 #Start of UI
 shinyUI(fluidPage(
@@ -31,7 +30,7 @@ shinyUI(fluidPage(
         options = list(maxItems = 4)
         ), 
         
-        phone_data <- phone_data[phone_data$brand == "brand",],
+        #phone_data <- phone_data[phone_data$brand == "brand",],
         
         useShinyjs(),
         #display_type(done)(subject to removal)
@@ -41,7 +40,7 @@ shinyUI(fluidPage(
         ),
         
         #os(ok for now)
-        selectizeInput("os", "OS:", choices = list("Apple", "Android", "Windows", "Other"),
+        selectizeInput("os", "OS:", choices = list("iOS", "Android", "Windows", "Other"),
                        multiple = TRUE,
                        options = list(maxItems = 4),
                        selected = list("a", "b", "c")
@@ -81,7 +80,7 @@ shinyUI(fluidPage(
         sliderInput("cpu", "CPU:",
                     min = min(phone_data$CPU_GHz, na.rm=T), 
                     max = max(phone_data$CPU_GHz, na.rm=T),
-                    value = c(0, 8)),
+                    value = c(min(phone_data$CPU_GHz, na.rm=T), max(phone_data$CPU_GHz, na.rm=T))),
         
         #Internal Memory(NEEDS FIX IN FORMAT)
         sliderInput("internalmem", "Internal Memory:",
@@ -95,9 +94,9 @@ shinyUI(fluidPage(
         
         #Primary camera in MP
         sliderInput("primarymb", "Primary-MP:",
-                    min = min(phone_data$Primary_Camera_MP, na.rm=T), 
-                    max = max(phone_data$Primary_Camera_MP, na.rm=T),
-                    value = c(min(phone_data$Primary_Camera_MP, na.rm=T), max(phone_data$Primary_Camera_MP, na.rm=T))),
+                    min = min(phone_data$Primary_Camera_MP, na.rm = T), 
+                    max = max(phone_data$Primary_Camera_MP, na.rm = T),
+                    value = c(.5, 2)), 
         
         #Secondary camera in MP
         sliderInput("secondarymb", "Secondary-MP:",

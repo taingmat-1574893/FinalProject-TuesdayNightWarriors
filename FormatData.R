@@ -8,8 +8,7 @@ library(stringi)
 
 #Format data
 phone_data <- read.csv("Data/phone_dataset.csv", quote = "", row.names = NULL, stringsAsFactors = FALSE) %>%
-  mutate(CPU = gsub('4x', "", CPU), CPU = gsub('2x', "", CPU), CPU = gsub('3x', "", CPU)) %>% 
-  select(-status, -radio) 
+  mutate(CPU = gsub('4x', "", CPU), CPU = gsub('2x', "", CPU), CPU = gsub('3x', "", CPU))
 
 #Function which takes in a column of phone specs
 #Returns the column only containing the first number of each string
@@ -27,7 +26,9 @@ phone_data <- phone_data %>%
   mutate("Internal-Memory" = firstNum(phone_data$internal_memory)) %>%
   mutate("Ram_GB" = firstNum(phone_data$RAM)) %>%
   mutate("approx_price_USD" = approx_price_EUR*1.19) %>%
-  mutate("Display_size" = firstNum(phone_data$display_size))
+  mutate("Display_size" = firstNum(phone_data$display_size)) %>%
+  mutate("Announced" = firstNum(phone_data$announced))
+  
 #All blanks and N/A values become NA
 phone_data[phone_data==""]<-NA
 phone_data[phone_data=="N/A"]<-NA

@@ -30,8 +30,9 @@ shinyUI(pageWithSidebar(
     uiOutput("choose_brand"),
     #data_sets <- data_sets[data_sets$brand == "brand", ],
 
-    uiOutput("choose_displaytype"),
-
+    uiOutput("choose_os"),
+    uiOutput("choose_weight"),
+    uiOutput("choose_CPU"),
     uiOutput("choose_model")
   ),
   

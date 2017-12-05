@@ -97,7 +97,7 @@ shinyUI(fluidPage(
                     min = min(phone_data$Primary_Camera_MP, na.rm = T), 
                     max = max(phone_data$Primary_Camera_MP, na.rm = T),
                     value = c(.5, 2)), 
-        
+         
         #Secondary camera in MP
         sliderInput("secondarymb", "Secondary-MP:",
                     min = min(phone_data$Secondry_Camera_MP, na.rm=T), 

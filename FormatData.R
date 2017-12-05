@@ -19,7 +19,7 @@ firstNum <- function(column) {
 #Reformatting the data to make it quantifiable 
 phone_data <- phone_data %>%  
   mutate("CPU_GHz"= firstNum(phone_data$CPU)) %>% 
-  mutate("Memory_Card_GB"= firstNum(phone_data$memory_card)) %>% 
+  mutate("Memory_Card_GB"= firstNum(phone_data$memory_card)) %>%
   mutate("Battery_MPH"= firstNum(phone_data$battery)) %>% 
   mutate("Primary_Camera_MP" = ifelse(firstNum(phone_data$primary_camera) > 50, NA, firstNum(phone_data$primary_camera))) %>%
   mutate("Secondary_Camera_MP" = ifelse(firstNum(phone_data$secondary_camera) > 20, NA, firstNum(phone_data$secondary_camera))) %>%
@@ -32,3 +32,4 @@ phone_data <- phone_data %>%
 #All blanks and N/A values become NA
 phone_data[phone_data==""]<-NA
 phone_data[phone_data=="N/A"]<-NA
+phone_data[is.na(phone_data$Memory_Card_GB)] <- 0

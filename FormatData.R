@@ -1,40 +1,29 @@
 library(dplyr)
 library(stringi)
 
-#Format data
-
 #DATA <- read.csv("/Users/mikiaslema/Documents/INFO201/Projects/FinalProject/FinalProject-TuesdayNightWarriors/Data/phone_dataset.csv", quote = "", row.names = NULL, stringsAsFactors = FALSE)
 
-GreaterThan50NA <- function(number) {
-  if(number > 50) {
-    return(NA)
-  }
-  else {
-    return(number)
-  }
-}
+#Format data
 
-DATA <- read.csv("Data/phone_dataset.csv", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+phone_data <- read.csv("Data/phone_dataset.csv", quote = "", row.names = NULL, stringsAsFactors = FALSE) %>%
+  mutate(CPU = gsub('4x', "", CPU), CPU = gsub('2x', "", CPU), CPU = gsub('3x', "", CPU)) %>% 
+  select(-status) 
 
+#Function which takes in a column of phone specs
+#Returns the column only containing the first number of each string
+firstNum <- function(column) {
+  return(as.numeric(stri_extract_first_regex(column, "[0.0-9.0]+")))
+} 
 #use baseline r regx 
-ModifiedData <- DATA[, -which(names(DATA) %in% c("status", "weight_oz"))] %>% 
-  mutate(CPU = gsub('4x', "", CPU), CPU = gsub('2x', "", CPU), CPU = gsub('3x', "", CPU))
-  
-PrimaryJustMP <- as.numeric(stri_extract_first_regex(ModifiedData$primary_camera, "[0.0-9.0]+"))
-SecondaryJustMP <- as.numeric(stri_extract_first_regex(ModifiedData$secondary_camera, "[0.0-9.0]+"))
-CpuGHz <- as.numeric(stri_extract_first_regex(ModifiedData$CPU, "[0.0-9.0]+"))
-MemoryCard <- as.numeric(stri_extract_first_regex(ModifiedData$memory_card, "[0.0-9.0]+"))
-BatteryMPH <- as.numeric(stri_extract_first_regex(ModifiedData$battery, "[0.0-9.0]+"))
-internalMem <- as.numeric(stri_extract_last_regex(ModifiedData$internal_memory, "[0.0-9.0]+"))
-#Ram <- as.numeric(stri_extract_first_regex(ModifiedData$RAM, "[0.0-9.0]+"))
-#Applying
-phone_data <- ModifiedData  %>%  
-  mutate("CPU_GHz"=CpuGHz) %>% 
-  mutate("Memory_Card_GB"=MemoryCard) %>% 
-  mutate("Battery_MPH"=BatteryMPH) %>% 
-  mutate("Primary_Camera_MP" = ifelse(PrimaryJustMP > 50, NA, PrimaryJustMP)) %>%
-  mutate("Secondary_Camera_MP" = ifelse(SecondaryJustMP > 20, NA, SecondaryJustMP)) %>%
-  mutate("Internal-Memory" = internalMem) %>%
-  mutate("Ram_GB" = Ram) 
+
+#Reformatting the data to make it quantifiable 
+phone_data <- phone_data %>%  
+  mutate("CPU_GHz"= firstNum(phone_data$CPU)) %>% 
+  mutate("Memory_Card_GB"= firstNum(phone_data$memory_card)) %>% 
+  mutate("Battery_MPH"= firstNum(phone_data$battery)) %>% 
+  mutate("Primary_Camera_MP" = ifelse(firstNum(phone_data$primary_camera) > 50, NA, firstNum(phone_data$primary_camera))) %>%
+  mutate("Secondary_Camera_MP" = ifelse(firstNum(phone_data$secondary_camera) > 20, NA, firstNum(phone_data$secondary_camera))) %>%
+  mutate("Internal-Memory" = firstNum(phone_data$internal_memory)) %>%
+  mutate("Ram_GB" = firstNum(phone_data$RAM)) 
 phone_data[phone_data==""]<-NA
 phone_data[phone_data=="N/A"]<-NA

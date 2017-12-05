@@ -1,22 +1,38 @@
-#Neccesary Libraries
-library(shiny)
-library(dplyr)
-library(ggplot2)
-library(plotly)
-library(scales)
 
 source("FormatData.R")
 
-#Data setup
-phone_data <- read.csv("Data/phone_dataset.csv", quote = "", row.names = NULL, stringsAsFactors = FALSE)
 
-#Start of Shiny Server 
-shinyServer(function(input, output) {
-  output$phone_data <- renderDataTable({
-    phone_data %>%
-      filter(input$os %in% OS)
-  })
+
+  PhoneModelList = list(
+   "iPhone 7 Plus",
+   "iPhone 7",
+   "iPhone SE"
+  )
+
+ListofSpecs = list(
+    "RAM" = 'Ram_GB',
+    "Battery" = 'Battery_MPH',
+    "CPU" = 'CPU_GHz',
+    "Internal Memory" = 'Internal Memory',
+    "Primary Camera" = 'Primary_Camera_MP',
+    "Secondary Camera" = 'Secondary_Camera_MP',
+    "Memory Card" = "Memory_Card_GB"
+  )
+
+
+
+
+phoneDF <- phone_data %>% filter(model %in% PhoneModelList)
+if(length(ListofSpecs) >= 1){
+  x <- ggplot(phoneDF) +
+    geom_col(aes_string("model", as.character(ListofSpecs[1]), fill = "model"))
+    }
+if(length((ListofSpecs) >= 2)){
+  y <- ggplot(phoneDF) +
+    geom_col(aes_string("model", as.character(ListofSpecs[2]), fill = "model"))
+  }
+ if (length((ListofSpecs) >= 3)){
+   z <- ggplot(phoneDF) +
+     geom_col(aes_string("model", as.character(ListofSpecs[3]), fill = "model"))
+}
   
-plot <- ggplot(phone_data, aes(x=phone_data$cloudMobile.S500, y=phone_data$Ram_GB)) + 
-  scale_y_continuous(breaks=pretty_breaks(n=5)) +
-  labs(x = "Model",y = "Stats",title = "Phone Stats")

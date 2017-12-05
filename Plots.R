@@ -2,7 +2,6 @@
 source("FormatData.R")
 
 
-
   PhoneModelList = list(
    "iPhone 7 Plus",
    "iPhone 7",
@@ -20,8 +19,6 @@ ListofSpecs = list(
   )
 
 
-
-
 phoneDF <- phone_data %>% filter(model %in% PhoneModelList)
 if(length(ListofSpecs) >= 1){
   x <- ggplot(phoneDF) +
@@ -36,3 +33,23 @@ if(length((ListofSpecs) >= 2)){
      geom_col(aes_string("model", as.character(ListofSpecs[3]), fill = "model"))
 }
   
+
+TableOG <- read.csv("Data/phone_dataset - original.csv")
+
+if(length(ListofSpecs) >= 1){
+  a <- TableOG %>% filter(ListofSpecs[1]
+ )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

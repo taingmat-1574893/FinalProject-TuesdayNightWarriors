@@ -16,13 +16,13 @@ shinyUI(pageWithSidebar(
     uiOutput("choose_primary"),
     uiOutput("choose_secondary"),
     uiOutput("choose_intmem"),
-    uiOutput("choose_features"),
-    uiOutput("choose_model")
-    
+    uiOutput("choose_features")
   ),
   
   
   mainPanel(
+    uiOutput("choose_model"),
+    
     tableOutput("data_table")
   )
 ))

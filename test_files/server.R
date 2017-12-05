@@ -54,7 +54,7 @@ shinyServer(function(input, output) {
     
     #CPU GHZ(NEEDS FIX IN FORMAT MHZ TO GHZ)
     sliderInput("primary_cam", "Minimun Primary Camera",
-                min = min(phone_data$Primary_Camera_MP, na.rm=T), 
+                min = 0, 
                 max = max(phone_data$Primary_Camera_MP, na.rm=T),
                 value = 25
     )

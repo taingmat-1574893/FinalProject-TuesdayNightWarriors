@@ -103,10 +103,18 @@ shinyServer(function(input, output) {
     if(length(input$os) != 0) {
       phone_data <- phone_data[phone_data$OS %in% input$os, ]
     }
+    if(input$cpu != 1) {
     phone_data <- phone_data[phone_data$CPU_GHz >= input$cpu, ]
+    }
+    if(input$ram != 1) {
     phone_data <- phone_data[phone_data$Ram_GB >= input$ram, ]
+    }
+    if(input$primary_cam != 0) {
     phone_data <- phone_data[phone_data$Primary_Camera_MP >= input$primary_cam, ]
+    }
+    if(input$secondary_cam != 0) {
     phone_data <- phone_data[phone_data$Secondary_Camera_MP >= input$secondary_cam, ]
+    }
     
     #if (input$bluetooth == TRUE) {
     #  phone_data <- phone_data[phone_data$bluetooth == "Yes",]

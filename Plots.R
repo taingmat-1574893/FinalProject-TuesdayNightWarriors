@@ -1,8 +1,8 @@
-
+library(dplyr)
 source("FormatData.R")
 
 
-  PhoneModelList = list(
+PhoneModelList = list(
    "iPhone 7 Plus",
    "iPhone 7",
    "iPhone SE"
@@ -34,11 +34,46 @@ if(length((ListofSpecs) >= 2)){
 }
   
 
-TableOG <- read.csv("Data/phone_dataset - original.csv")
 
-if(length(ListofSpecs) >= 1){
-  a <- TableOG %>% filter(ListofSpecs[1]
- )
+
+
+TPhoneModelList = list(
+  "iPhone 7 Plus",
+  "iPhone 7",
+  "iPhone SE"
+)
+
+TListofSpecs = list(
+  "RAM" = 'Ram_GB',
+  "Battery" = 'Battery_MPH',
+  "CPU" = 'CPU_GHz',
+  "Internal Memory" = 'Internal Memory',
+  "Primary Camera" = 'Primary_Camera_MP',
+  "Secondary Camera" = 'Secondary_Camera_MP',
+  "Memory Card" = "Memory_Card_GB"
+)
+
+
+TableOG <- read.csv("Data copy/phone_dataset - original.csv")
+
+smallTable <- TableOG[652:655,2:4]
+
+
+PlotTable function () {
+  
+  if(length(TListofSpecs) >= 1){
+    
+    xSpecs <- grid.table(smallTable)
+  }
+  if(length((ListofSpecs) >= 2)){
+    y <- plot(TableOG)
+  }
+  if (length((ListofSpecs) >= 3)){
+    z <- ggplot(phoneDF) +
+      geom_col(aes_string("model", as.character(ListofSpecs[3]), fill = "model"))
+  }
+  
+  
 }
 
 

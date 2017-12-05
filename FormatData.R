@@ -1,6 +1,11 @@
 library(dplyr)
 library(stringi)
 
+#The data was atrocious so we had to use a mix of R and Excel to reformat it
+#We reformatted data for two purposes: 
+  #1: Making it quantifiable thus graphable 
+  #2: Making it Filterable 
+#
 ###########################GENERAL NOTES ABOUT DATA WRANGLING############################################
 #use baseline r regx
 

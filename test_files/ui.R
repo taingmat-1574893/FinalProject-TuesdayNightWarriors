@@ -7,7 +7,6 @@ shinyUI(pageWithSidebar(
   headerPanel("test"),
   
   sidebarPanel(
-    
     uiOutput("choose_brand"),
     uiOutput("choose_os"),
     uiOutput("choose_CPU"),

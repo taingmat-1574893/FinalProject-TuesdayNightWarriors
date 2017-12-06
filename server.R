@@ -87,6 +87,7 @@ shinyServer(function(input, output) {
   #----------------------------------
   # Widget that allows a user to choose the specs they want to compare by
   output$compare_by <- renderUI({
+    
     selectizeInput("specs", "Compare By:",
                    choices  = c("RAM" = "Ram_GB", 
                                 "Expandable_Memory" = "Memory_Card_GB", 
@@ -98,7 +99,8 @@ shinyServer(function(input, output) {
                                 "CPU" = "CPU_GHz", 
                                 "Approx_Price" = "approx_price_USD"),
                    multiple = TRUE,
-                   options = list(maxItems = 3)
+                   options = list(maxItems = 3),
+                   width = "100%"
     ) 
   })
   #---------------------------------------------
@@ -148,8 +150,9 @@ shinyServer(function(input, output) {
     selectizeInput("model", "Model:",
                    choices  = phone_data$model,
                    multiple = TRUE,
-                   options = list(maxItems = 3)
-    ) 
+                   options = list(maxItems = 3),
+                   width = "100%"
+    )
   })
 })
 

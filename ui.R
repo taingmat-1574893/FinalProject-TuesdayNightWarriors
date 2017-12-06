@@ -16,9 +16,10 @@ shinyUI(fluidPage(
   titlePanel("TruePhone"),
   
   dashboardPage(
-     skin = "purple",
+     skin = "blue",
      
      dashboardHeader(
+           titleWidth = 300,
            title = "Phone Finder"),
      dashboardSidebar(
            # side bar panel 

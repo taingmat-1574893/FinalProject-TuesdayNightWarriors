@@ -71,14 +71,14 @@ shinyServer(function(input, output) {
   output$compare_by <- renderUI({
     selectizeInput("specs", "Compare By:",
                    choices  = c("RAM(GB)" = "Ram_GB", 
-                                "Maximum Expandable Memory(GB)" = "Memory_Card_GB", 
+                                "CPU(GHz)" = "CPU_GHz", 
                                 "Internal Memory(GB)" = "Internal_Memory",
                                 "Display Size(Inches)" = "Display_size", 
                                 "Primary Camera(MP)" = "Primary_Camera_MP", 
                                 "Secondary Camera(MP)" = "Secondary_Camera_MP", 
                                 "Battery(mHz)" = "Battery_MPH",
-                                "CPU(GHz)" = "CPU_GHz", 
-                                "Approx Price(USD)" = "approx_price_USD"),
+                                "Approx Price(USD)" = "approx_price_USD",
+                                "Maximum Expandable Memory(GB)" = "Memory_Card_GB"), 
                    multiple = TRUE,
                    options = list(maxItems = 3),
                    width = "100%"
@@ -88,6 +88,8 @@ shinyServer(function(input, output) {
 #-------------------------Model Selector----------------------------------------------------
   output$choose_model <- renderUI({
     #-------Filtering down data to match user inputs---------------------------------------------
+    #If statements are neccesary to prevent filtering until the user actually puts in an input.
+    #This way it doesn't attempt to filter by empty lists or abnormally small numbers
     #---------------Filter by brand and os---------
     if(length(input$brand) != 0) {
       phone_data <- phone_data[phone_data$brand == input$brand, ]

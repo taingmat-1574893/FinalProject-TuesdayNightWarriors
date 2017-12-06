@@ -20,6 +20,7 @@ shinyUI(pageWithSidebar(
   
   
   mainPanel(
+    uiOutput("compare_by"),
     uiOutput("choose_model"),
     
     tableOutput("data_table")

@@ -1,18 +1,18 @@
 library(shiny)
 
-#phone_data <- read.csv("Data/phone_dataset.csv", quote = "", row.names = NULL, stringsAsFactors = FALSE)
 source("../FormatData.R")
 
 shinyServer(function(input, output) {
   #----------------------------------
+  # Widget that allows a user to choose the phone brand
   output$choose_brand <- renderUI({
     selectizeInput("brand", "Brand:", choices = phone_data$brand, 
                 multiple = TRUE,
                 options = list(maxItems = 4))
   })
   #---------------------------------
+  # Widget that allows a user to choose the OS
   output$choose_os <- renderUI({
-    
     #filter by brand
     phone_data <- phone_data[phone_data$brand == input$brand, ]
     selectizeInput("os", "OS:",
@@ -22,82 +22,60 @@ shinyServer(function(input, output) {
   })
   #--------------------------------
   # Sliders
+  # Widget that allows a user to choose the CPU
   output$choose_CPU <- renderUI({
-    
-    #CPU GHZ(NEEDS FIX IN FORMAT MHZ TO GHZ)
-    sliderInput("cpu", "Minimun CPU:",
+        sliderInput("cpu", "Minimun CPU:",
                 min = 0,
                 max = 3,
                 value = 0
     )
   })
   #----------------------------------
+  # Widget that allows a user to choose the minimun ram
   output$choose_ram <- renderUI({
-    
-    #CPU GHZ(NEEDS FIX IN FORMAT MHZ TO GHZ)
-    sliderInput("ram", "Minimum RAM (GB):",
+        sliderInput("ram", "Minimum RAM (GB):",
                 min = 0, 
                 max = max(phone_data$Ram_GB, na.rm = T), 
                 value = 0
                 )
   })
-  #----------------------------------
-  # output$choose_mem <- renderUI({
-  #   
-    #CPU GHZ(NEEDS FIX IN FORMAT MHZ TO GHZ)
-    # selectInput("expandable_memory", "Minimum Expandable Memory",
-    #              choices = phone_data$Memory_Card_GB,
-    #              selected = 0
-    #             )
-  #   sliderInput("expandable_memory", "Minimum Expandable Memory",
-  #               min = 0, 
-  #               max = 128,
-  #               value = 0
-  #   )
-  # })
   #---------------------------------
+  # Widget that allows a user to choose the minimun primary camera
   output$choose_primary <- renderUI({
-    
-    #CPU GHZ(NEEDS FIX IN FORMAT MHZ TO GHZ)
-    sliderInput("primary_cam", "Minimun Primary Camera",
+        sliderInput("primary_cam", "Minimun Primary Camera",
                 min = 0, 
                 max = 20,
                 value = 0
     )
   })
   #----------------------------------
+  # Widget that allows a user to choose the minimun secondary camera
   output$choose_secondary<- renderUI({
-    
-    #CPU GHZ(NEEDS FIX IN FORMAT MHZ TO GHZ)
-    sliderInput("secondary_cam", "Minimun Secondary Camera",
+        sliderInput("secondary_cam", "Minimun Secondary Camera",
                 min = 0,
                 max = 20,
                 value = 0
     )
   })
   #-----------------------------------
+  # Widget that allows a user to choose the internal memory
   output$choose_intmem<- renderUI({
-
-    #CPU GHZ(NEEDS FIX IN FORMAT MHZ TO GHZ)
     sliderInput("internalmem", "Internal Memory:",
                 min = 0,
                 max = 128,
                 value = 0
-                            
     )
   })
   #-----------------------------------
-  # boolean checksss
-  
+  # boolean checks
+  # A group of check boxes that allows a user choose the 
   output$choose_features <- renderUI({
     tagList(
-      
       checkboxInput("bluetooth", "Bluetooth:", value = FALSE),
       checkboxInput("gps", "GPS:", value = FALSE),
       checkboxInput("nfc", "NFC:", value = FALSE),
       checkboxInput("audiojack", "Audio_jack:", value = FALSE),
       checkboxInput("loudspeaker", "Loud speaker:", value = FALSE)
-          
       )
   })
   #----------------------------------

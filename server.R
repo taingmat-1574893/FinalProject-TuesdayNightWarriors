@@ -8,6 +8,7 @@ library(shinyjs)
 
 #Data setup
 source("FormatData.R")
+source("Plots.R")
 
 shinyServer(function(input, output) {
   # Widget that allows a user to choose the phone brand
@@ -41,7 +42,7 @@ shinyServer(function(input, output) {
   output$choose_ram <- renderUI({
     sliderInput("ram", "Minimum RAM (GB):",
                 min = 0, 
-                max = max(phone_data$Ram_GB, na.rm = T), 
+                max = 4,
                 value = 0
     )
   })
@@ -154,5 +155,21 @@ shinyServer(function(input, output) {
                    width = "100%"
     )
   })
-})
+  
+  output$plot1 <- renderPlot({
+      GraphIT(input$model, input$specs)
+    })
+
+  output$table = renderTable(rownames = TRUE, {
+    PlotTable(input$model) 
+    
+  })
+  
+  })
+  
+  
+
+
+  
+
 

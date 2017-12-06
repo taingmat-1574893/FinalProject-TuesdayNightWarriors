@@ -39,7 +39,9 @@ shinyUI(fluidPage(
      dashboardBody(
        # main panel
        uiOutput("compare_by"),
-       uiOutput("choose_model")
+       uiOutput("choose_model"),
+       plotOutput("plot1"),
+       tableOutput("table")
       )
     )
   )

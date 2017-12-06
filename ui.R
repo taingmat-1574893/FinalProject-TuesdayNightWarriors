@@ -37,6 +37,10 @@ shinyUI(fluidPage(
            uiOutput("choose_features")
      ),
      dashboardBody(
+       tags$style(type="text/css",
+                  ".shiny-output-error { visibility: hidden; }",
+                  ".shiny-output-error:before { visibility: hidden; }"
+       ),
        # main panel
        uiOutput("compare_by"),
        uiOutput("choose_model"),

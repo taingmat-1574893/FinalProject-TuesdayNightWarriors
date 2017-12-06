@@ -103,9 +103,9 @@ if(length((ListofSpecs) >= 2)){
 TableOG <- read.csv("Data/phone_dataset - original.csv",quote = "", row.names = NULL, stringsAsFactors = FALSE)
 
 PlotTable <- function (PhoneModelList) {
-  xSpecs <- TableOG %>% filter(model %in% PhoneModelList) %>% select(-model)
-  rownames(xSpecs) <- PhoneModelList
-  xSpecs <- t(xSpecs)
+  xSpecs <- TableOG %>% filter(model %in% PhoneModelList) 
+  rownames(xSpecs) <- xSpecs$model
+  xSpecs <- t(xSpecs %>% select(-model))
   return(xSpecs)
   
 }

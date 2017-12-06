@@ -17,6 +17,7 @@ shinyServer(function(input, output) {
                    multiple = TRUE,
                    options = list(maxItems = 4))
   })
+  
   #---------------------------------
   # Widget that allows a user to choose the OS
   output$choose_os <- renderUI({
@@ -27,6 +28,7 @@ shinyServer(function(input, output) {
                    multiple = TRUE
     )
   })
+  
   #--------------------------------
   # Sliders
   # Widget that allows a user to choose the CPU
@@ -37,6 +39,7 @@ shinyServer(function(input, output) {
                 value = 0
     )
   })
+  
   #----------------------------------
   # Widget that allows a user to choose the Minimum ram
   output$choose_ram <- renderUI({
@@ -46,6 +49,7 @@ shinyServer(function(input, output) {
                 value = 0
     )
   })
+  
   #---------------------------------
   # Widget that allows a user to choose the Minimum primary camera
   output$choose_primary <- renderUI({
@@ -55,6 +59,7 @@ shinyServer(function(input, output) {
                 value = 0
     )
   })
+  
   #----------------------------------
   # Widget that allows a user to choose the Minimum secondary camera
   output$choose_secondary<- renderUI({
@@ -64,6 +69,7 @@ shinyServer(function(input, output) {
                 value = 0
     )
   })
+  
   #-----------------------------------
   # Widget that allows a user to choose the internal memory
   output$choose_intmem<- renderUI({
@@ -73,6 +79,7 @@ shinyServer(function(input, output) {
                 value = 0
     )
   })
+  
   #-----------------------------------
   # boolean checks
   # A group of check boxes that allows a user choose required features
@@ -85,10 +92,11 @@ shinyServer(function(input, output) {
       checkboxInput("loudspeaker", "Loud speaker:", value = FALSE)
     )
   })
+  
   #----------------------------------
   # Widget that allows a user to choose the specs they want to compare by
   output$compare_by <- renderUI({
-    
+    #
     selectizeInput("specs", "Compare By:",
                    choices  = c("RAM" = "Ram_GB", 
                                 "Expandable_Memory" = "Memory_Card_GB", 
@@ -156,13 +164,14 @@ shinyServer(function(input, output) {
     )
   })
   
+  #
   output$plot1 <- renderPlot({
       GraphIT(input$model, input$specs)
     })
-
+  
+  #
   output$table = renderTable(rownames = TRUE, {
     PlotTable(input$model) 
-    
   })
   
   })

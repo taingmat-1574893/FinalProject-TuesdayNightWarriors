@@ -2,24 +2,36 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 
-source("FormatData copy.R")
 
-
-sidebarLayout(
-  position = "right",
-  sidebarPanel(
+fluidPage(
+  
+  # App title ----
+  titlePanel("Phone Comparisons"),
+  
+  # Sidebar layout with input and output definitions ----
+  sidebarLayout(
     
-    #Side Bar Panel
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+      
+      # Input: Slider for the number of bins ----
+      sliderInput(inputId = "bins",
+                  label = "Number of bins:",
+                  min = 1,
+                  max = 50,
+                  value = 30)
+      
+    ),
     
-    selectizeInput("brand", "Brand:", choices = phone_data$brand,
-                   multiple = TRUE,
-                   options = list(maxItems = 4)
-    ), 
-    
-  #Main Panel
-  mainPanel(
-    plotOutput("distPlot"),
-    verbatimTextOutput(outputId = "calories")
+    # Main panel for displaying outputs ----
+    mainPanel(
+      
+      # Output: Histogram ----
+      plotOutput(outputId = "distPlot")
+      
+    )
   )
 )
-)
+
+
+

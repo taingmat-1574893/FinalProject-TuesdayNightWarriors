@@ -4,20 +4,21 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 
-source("FormatData copy.R")
+source("FormatData.R")
 
 
 #Shiny Server
 server <- shinyServer(function(input, output) {
   
   
-  output$specs <- renderDataTable({
+  output$specs <- renderPrint({
     input$SpecsInput
   })
-  output$distPlot <- renderDataTable({
+  output$distPlot <- renderPlot({
     filtered <- TableOG %>%
       filter(model == input$ModelInput)
-
+  xSpecs <- grid.table(smallTable)
+    
   })
   
 })

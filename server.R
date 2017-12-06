@@ -31,7 +31,7 @@ shinyServer(function(input, output) {
   #----------------------Sliders-----------------------------------------------
   # Widget that allows a user to choose the minimum CPU speed in GHz
   output$choose_CPU <- renderUI({
-    sliderInput("cpu", "Minimum CPU(GHz):", min = 0, max = 3, value = 0)
+    sliderInput("cpu", "Minimum CPU(GHz):", min = 0, max = 2, value = 0)
   })
   
   # Widget that allows a user to choose the minimum ram in GB
@@ -41,17 +41,17 @@ shinyServer(function(input, output) {
   
   # Widget that allows a user to choose the minimum primary camera in MP
   output$choose_primary <- renderUI({
-    sliderInput("primary_cam", "Minimum Primary Camera(MP):", min = 0, max = 20, value = 0)
+    sliderInput("primary_cam", "Minimum Primary Camera(MP):", min = 0, max = 16, value = 0)
   })
   
   # Widget that allows a user to choose the minimum secondary camera in MP
   output$choose_secondary<- renderUI({
-    sliderInput("secondary_cam", "Minimum Secondary Camera(MP):", min = 0, max = 20, value = 0)
+    sliderInput("secondary_cam", "Minimum Secondary Camera(MP):", min = 0, max = 16, value = 0)
   })
   
   # Widget that allows a user to choose the minimum internal memory in GB
   output$choose_intmem<- renderUI({
-    sliderInput("internalmem", "Minimum Internal Memory(GB):", min = 0, max = 128, value = 0)
+    sliderInput("internalmem", "Minimum Internal Memory(GB):", min = 0, max = 64, value = 0)
   })
   
   #----------------------Checkboxes-----------------------------------------------
@@ -72,8 +72,8 @@ shinyServer(function(input, output) {
     selectizeInput("specs", "Compare By:",
                    choices  = c("RAM(GB)" = "Ram_GB", 
                                 "CPU(GHz)" = "CPU_GHz", 
-                                "Internal Memory(GB)" = "Internal_Memory",
-                                "Display Size(Inches)" = "Display_size", 
+                                "Internal Memory(GB)" = "Internal_Memory_GB",
+                                "Display Size(Inches)" = "Display_size_Inches", 
                                 "Primary Camera(MP)" = "Primary_Camera_MP", 
                                 "Secondary Camera(MP)" = "Secondary_Camera_MP", 
                                 "Battery(mHz)" = "Battery_MPH",

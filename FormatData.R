@@ -29,10 +29,10 @@ phone_data <- phone_data %>%
   mutate("Battery_MPH"= firstNum(phone_data$battery)) %>% 
   mutate("Primary_Camera_MP" = ifelse(firstNum(phone_data$primary_camera) > 50, NA, firstNum(phone_data$primary_camera))) %>%
   mutate("Secondary_Camera_MP" = ifelse(firstNum(phone_data$secondary_camera) > 20, NA, firstNum(phone_data$secondary_camera))) %>%
-  mutate("Internal_Memory" = firstNum(phone_data$internal_memory)) %>%
+  mutate("Internal_Memory_GB" = firstNum(phone_data$internal_memory)) %>%
   mutate("Ram_GB" = firstNum(phone_data$RAM)) %>%
   mutate("approx_price_USD" = approx_price_EUR*1.19) %>%
-  mutate("Display_size" = firstNum(phone_data$display_size)) %>%
+  mutate("Display_size_Inches" = firstNum(phone_data$display_size)) %>%
   mutate("Announced" = firstNum(phone_data$announced))
 
 #------All blanks and N/A values become NA--------------------

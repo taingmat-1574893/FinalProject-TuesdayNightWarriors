@@ -2,7 +2,8 @@ library(dplyr)
 library(ggplot2)
 source("FormatData.R")
 
-
+#Function taken because for some reason it doesn't exist in the ggplot2 package
+#Found at __________
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   require(grid)
   

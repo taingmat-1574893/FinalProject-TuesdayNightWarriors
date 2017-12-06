@@ -4,7 +4,7 @@ source("FormatData.R")
 
 #Function taken because for some reason it doesn't exist in the ggplot2 package
 #Found at __________
-multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
   require(grid)
   
   # Make a list from the ... arguments and plotlist
@@ -21,15 +21,15 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
                      ncol = cols, nrow = ceiling(numPlots/cols))
   }
   
-  if (numPlots==1) {
+  if (numPlots == 1) {
     print(plots[[1]])
     
   } else {
-    # Set up the page
+    # Sets up the page
     grid.newpage()
     pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
     
-    # Make each plot, in the correct location
+    # Makes each plot, in the correct location
     for (i in 1:numPlots) {
       # Get the i,j matrix positions of the regions that contain this subplot
       matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
@@ -47,19 +47,19 @@ GraphIT <- function(PhoneModelList,ListofSpecs) {
 if(length(ListofSpecs) >= 1){
   
   x <- ggplot(phoneDF,aes(x=model,y= eval(parse(text=ListofSpecs[1])))) +
-      geom_bar(stat="identity",aes(fill= model)) + 
+      geom_bar(stat="identity", aes(fill = model)) + 
     coord_flip() +
     labs(x = "Model", y = ListofSpecs[1]) 
     }
 if(length((ListofSpecs) >= 2)){
-  y <- ggplot(phoneDF,aes(x=model,y= eval(parse(text=ListofSpecs[2])))) +
-    geom_bar(stat="identity",aes(fill= model)) + 
+  y <- ggplot(phoneDF,aes(x = model,y = eval(parse(text = ListofSpecs[2])))) +
+    geom_bar(stat = "identity", aes(fill = model)) + 
     coord_flip() +
     labs(x = "Model", y = ListofSpecs[2]) 
   }
  if (length((ListofSpecs) >= 3)){
-   z <- ggplot(phoneDF,aes(x=model,y= eval(parse(text=ListofSpecs[3])))) +
-     geom_bar(stat="identity",aes(fill= model)) + 
+   z <- ggplot(phoneDF,aes(x=model,y= eval(parse(text = ListofSpecs[3])))) +
+     geom_bar(stat = "identity", aes(fill = model)) + 
      coord_flip() +
      labs(x = "Model", y = ListofSpecs[3]) 
  }
@@ -76,6 +76,7 @@ if(length((ListofSpecs) >= 2)){
 
 TableOG <- read.csv("Data/phone_dataset - original.csv",quote = "", row.names = NULL, stringsAsFactors = FALSE)
 
+# Plots information of selected models of phones
 PlotTable <- function (PhoneModelList) {
   xSpecs <- TableOG %>% filter(model %in% PhoneModelList) 
   rownames(xSpecs) <- xSpecs$model

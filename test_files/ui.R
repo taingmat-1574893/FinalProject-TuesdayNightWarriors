@@ -22,7 +22,8 @@ shinyUI(pageWithSidebar(
   mainPanel(
     uiOutput("compare_by"),
     uiOutput("choose_model"),
-    
+    # plotOutput("plot1")
+    # 
     tableOutput("data_table")
   )
 ))

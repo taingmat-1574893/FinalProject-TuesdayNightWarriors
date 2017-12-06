@@ -11,12 +11,12 @@ source("FormatData.R")
 
 #Start of UI
 shinyUI(fluidPage(
-
+  theme = "sweet.css", 
   # Application title
   titlePanel("TruePhone"),
   
   dashboardPage(
-     skin = "blue",
+     skin = "black",
      
      dashboardHeader(
            titleWidth = 300,

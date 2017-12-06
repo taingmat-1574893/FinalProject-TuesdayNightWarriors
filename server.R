@@ -10,7 +10,6 @@ library(shinyjs)
 source("FormatData.R")
 
 shinyServer(function(input, output) {
-  #----------------------------------
   # Widget that allows a user to choose the phone brand
   output$choose_brand <- renderUI({
     selectizeInput("brand", "Brand:", choices = phone_data$brand, 
@@ -31,14 +30,14 @@ shinyServer(function(input, output) {
   # Sliders
   # Widget that allows a user to choose the CPU
   output$choose_CPU <- renderUI({
-    sliderInput("cpu", "Minimun CPU:",
+    sliderInput("cpu", "Minimum CPU:",
                 min = 0,
                 max = 3,
                 value = 0
     )
   })
   #----------------------------------
-  # Widget that allows a user to choose the minimun ram
+  # Widget that allows a user to choose the Minimum ram
   output$choose_ram <- renderUI({
     sliderInput("ram", "Minimum RAM (GB):",
                 min = 0, 
@@ -47,18 +46,18 @@ shinyServer(function(input, output) {
     )
   })
   #---------------------------------
-  # Widget that allows a user to choose the minimun primary camera
+  # Widget that allows a user to choose the Minimum primary camera
   output$choose_primary <- renderUI({
-    sliderInput("primary_cam", "Minimun Primary Camera",
+    sliderInput("primary_cam", "Minimum  Primary Camera",
                 min = 0, 
                 max = 20,
                 value = 0
     )
   })
   #----------------------------------
-  # Widget that allows a user to choose the minimun secondary camera
+  # Widget that allows a user to choose the Minimum secondary camera
   output$choose_secondary<- renderUI({
-    sliderInput("secondary_cam", "Minimun Secondary Camera",
+    sliderInput("secondary_cam", "Minimum Secondary Camera",
                 min = 0,
                 max = 20,
                 value = 0
@@ -75,7 +74,7 @@ shinyServer(function(input, output) {
   })
   #-----------------------------------
   # boolean checks
-  # A group of check boxes that allows a user choose the 
+  # A group of check boxes that allows a user choose required features
   output$choose_features <- renderUI({
     tagList(
       checkboxInput("bluetooth", "Bluetooth:", value = FALSE),
@@ -86,6 +85,7 @@ shinyServer(function(input, output) {
     )
   })
   #----------------------------------
+  # Widget that allows a user to choose the specs they want to compare by
   output$compare_by <- renderUI({
     selectizeInput("specs", "Compare By:",
                    choices  = c("RAM" = "Ram_GB", 
@@ -101,7 +101,8 @@ shinyServer(function(input, output) {
                    options = list(maxItems = 3)
     ) 
   })
-  
+  #---------------------------------------------
+  # Filtering down data to match user inputs
   output$choose_model <- renderUI({
     if(length(input$brand) != 0) {
       phone_data <- phone_data[phone_data$brand == input$brand, ]
@@ -136,7 +137,8 @@ shinyServer(function(input, output) {
     if (input$loudspeaker == TRUE) {
       phone_data <- phone_data[phone_data$loud_speaker == "Yes",]
     }
-    #filter to where compareable specs exist
+    
+    #filter to where comparable specs exist
     for(i in input$specs) {  
       phone_data <- phone_data %>% 
         filter(!is.na(eval(parse(text = i))))

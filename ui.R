@@ -17,11 +17,14 @@ shinyUI(fluidPage(
   
   dashboardPage(
      skin = "purple",
+     
      dashboardHeader(
            title = "Phone Finder"),
      dashboardSidebar(
+           # side bar panel 
            useShinyjs(),
            width = 300,
+           # widgets
            uiOutput("choose_brand"),
            uiOutput("choose_os"),
            uiOutput("choose_CPU"),
@@ -31,15 +34,12 @@ shinyUI(fluidPage(
            uiOutput("choose_secondary"),
            uiOutput("choose_intmem"),
            uiOutput("choose_features")
-      
      ),
      dashboardBody(
+       # main panel
        uiOutput("compare_by"),
        uiOutput("choose_model")
       )
     )
   )
 )
-
-
-#shinyApp(ui, server)

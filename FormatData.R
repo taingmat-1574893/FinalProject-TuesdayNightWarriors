@@ -22,7 +22,7 @@ firstNum <- function(column) {
 } 
 
 #-----Reformatting the data to make it quantifiable------------
-#Makes it possible to graph
+#Makes the data into a format that's possible to graph
 phone_data <- phone_data %>%  
   mutate("CPU_GHz"= firstNum(phone_data$CPU)) %>% 
   mutate("Memory_Card_GB"= firstNum(phone_data$memory_card)) %>%

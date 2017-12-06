@@ -6,10 +6,11 @@ library(plotly)
 library(shinydashboard)
 library(shinyjs)
 
-#Data setup
+#Setup, sources required functions, and creates phone_data
 source("FormatData.R")
 source("Plots.R")
 
+#-----------------------Start of Shiny Server-----------------------
 shinyServer(function(input, output) {
   # Widget that allows a user to choose the phone brand
   output$choose_brand <- renderUI({
@@ -18,10 +19,8 @@ shinyServer(function(input, output) {
                    options = list(maxItems = 4))
   })
   
-  #---------------------------------
   # Widget that allows a user to choose the OS
   output$choose_os <- renderUI({
-    #filter by brand
     phone_data <- phone_data[phone_data$brand == input$brand, ]
     selectizeInput("os", "OS:",
                    choices = phone_data$OS,
@@ -29,97 +28,73 @@ shinyServer(function(input, output) {
     )
   })
   
-  #--------------------------------
-  # Sliders
-  # Widget that allows a user to choose the CPU
+  #----------------------Sliders-----------------------------------------------
+  # Widget that allows a user to choose the minimum CPU speed in GHz
   output$choose_CPU <- renderUI({
-    sliderInput("cpu", "Minimum CPU:",
-                min = 0,
-                max = 3,
-                value = 0
-    )
+    sliderInput("cpu", "Minimum CPU(GHz):", min = 0, max = 3, value = 0)
   })
   
-  #----------------------------------
-  # Widget that allows a user to choose the Minimum ram
+  # Widget that allows a user to choose the minimum ram in GB
   output$choose_ram <- renderUI({
-    sliderInput("ram", "Minimum RAM (GB):",
-                min = 0, 
-                max = 4,
-                value = 0
-    )
+    sliderInput("ram", "Minimum RAM (GB):", min = 0, max = 4, value = 0)
   })
   
-  #---------------------------------
-  # Widget that allows a user to choose the Minimum primary camera
+  # Widget that allows a user to choose the minimum primary camera in MP
   output$choose_primary <- renderUI({
-    sliderInput("primary_cam", "Minimum  Primary Camera",
-                min = 0, 
-                max = 20,
-                value = 0
-    )
+    sliderInput("primary_cam", "Minimum Primary Camera(MP):", min = 0, max = 20, value = 0)
   })
   
-  #----------------------------------
-  # Widget that allows a user to choose the Minimum secondary camera
+  # Widget that allows a user to choose the minimum secondary camera in MP
   output$choose_secondary<- renderUI({
-    sliderInput("secondary_cam", "Minimum Secondary Camera",
-                min = 0,
-                max = 20,
-                value = 0
-    )
+    sliderInput("secondary_cam", "Minimum Secondary Camera(MP):", min = 0, max = 20, value = 0)
   })
   
-  #-----------------------------------
-  # Widget that allows a user to choose the internal memory
+  # Widget that allows a user to choose the minimum internal memory in GB
   output$choose_intmem<- renderUI({
-    sliderInput("internalmem", "Internal Memory:",
-                min = 0,
-                max = 128,
-                value = 0
-    )
+    sliderInput("internalmem", "Minimum Internal Memory(GB):", min = 0, max = 128, value = 0)
   })
   
-  #-----------------------------------
-  # boolean checks
+  #----------------------Checkboxes-----------------------------------------------
   # A group of check boxes that allows a user choose required features
   output$choose_features <- renderUI({
     tagList(
-      checkboxInput("bluetooth", "Bluetooth:", value = FALSE),
-      checkboxInput("gps", "GPS:", value = FALSE),
-      checkboxInput("nfc", "NFC:", value = FALSE),
-      checkboxInput("audiojack", "Audio_jack:", value = FALSE),
-      checkboxInput("loudspeaker", "Loud speaker:", value = FALSE)
+      checkboxInput("bluetooth", "Bluetooth", value = FALSE),
+      checkboxInput("gps", "GPS", value = FALSE),
+      checkboxInput("nfc", "NFC", value = FALSE),
+      checkboxInput("audiojack", "Audio jack", value = FALSE),
+      checkboxInput("loudspeaker", "Loud speaker", value = FALSE)
     )
   })
   
-  #----------------------------------
+  #------------------------Spec Selector--------------------------------------------
   # Widget that allows a user to choose the specs they want to compare by
   output$compare_by <- renderUI({
-    #
     selectizeInput("specs", "Compare By:",
-                   choices  = c("RAM" = "Ram_GB", 
-                                "Expandable_Memory" = "Memory_Card_GB", 
-                                "Internal Memory" = "Internal_Memory",
-                                "Display_Size" = "Display_size", 
-                                "Primary_Camera" = "Primary_Camera_MP", 
-                                "Secondary_Camera" = "Secondary_Camera_MP", 
-                                "Battery" = "Battery_MPH",
-                                "CPU" = "CPU_GHz", 
-                                "Approx_Price" = "approx_price_USD"),
+                   choices  = c("RAM(GB)" = "Ram_GB", 
+                                "Maximum Expandable Memory(GB)" = "Memory_Card_GB", 
+                                "Internal Memory(GB)" = "Internal_Memory",
+                                "Display Size(Inches)" = "Display_size", 
+                                "Primary Camera(MP)" = "Primary_Camera_MP", 
+                                "Secondary Camera(MP)" = "Secondary_Camera_MP", 
+                                "Battery(mHz)" = "Battery_MPH",
+                                "CPU(GHz)" = "CPU_GHz", 
+                                "Approx Price(USD)" = "approx_price_USD"),
                    multiple = TRUE,
                    options = list(maxItems = 3),
                    width = "100%"
     ) 
   })
-  #---------------------------------------------
-  # Filtering down data to match user inputs
+  
+#-------------------------Model Selector----------------------------------------------------
   output$choose_model <- renderUI({
+    #-------Filtering down data to match user inputs---------------------------------------------
+    #---------------Filter by brand and os---------
     if(length(input$brand) != 0) {
       phone_data <- phone_data[phone_data$brand == input$brand, ]
     }
     if(length(input$os) != 0) {
       phone_data <- phone_data[phone_data$OS %in% input$os, ]
+    #----------Filters by Sliders------------------
     }
     if(input$cpu != 0) {
       phone_data <- phone_data[phone_data$CPU_GHz >= input$cpu, ]
@@ -133,6 +108,7 @@ shinyServer(function(input, output) {
     if(input$secondary_cam != 0) {
       phone_data <- phone_data[phone_data$Secondary_Camera_MP >= input$secondary_cam, ]
     }
+    #----------Filters by checkboxes--------------
     if (input$bluetooth == TRUE) {
       phone_data <- phone_data[phone_data$bluetooth == "Yes",]
     }
@@ -148,14 +124,15 @@ shinyServer(function(input, output) {
     if (input$loudspeaker == TRUE) {
       phone_data <- phone_data[phone_data$loud_speaker == "Yes",]
     }
-    
-    #filter to where comparable specs exist
+    #--------Filter to where comparable specs exist-------------------
+    #Makes it so users can't try to plot phones with Unknown data
     for(i in input$specs) {  
       phone_data <- phone_data %>% 
         filter(!is.na(eval(parse(text = i))))
     }
     
-    # filter by model
+    #Users select phone models to compare by here
+    #Available models are filtered by the users preferences
     selectizeInput("model", "Model:",
                    choices  = phone_data$model,
                    multiple = TRUE,
@@ -164,17 +141,17 @@ shinyServer(function(input, output) {
     )
   })
   
-  #
+  #Creates plots of requested specs for requested models
   output$plot1 <- renderPlot({
       GraphIT(input$model, input$specs)
     })
   
-  #
+  #Creates table of all information relevant to the requested phone models
   output$table = renderTable(rownames = TRUE, {
     PlotTable(input$model) 
   })
   
-  })
+})
   
   
 

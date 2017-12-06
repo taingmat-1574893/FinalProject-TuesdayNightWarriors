@@ -1,3 +1,7 @@
+#Description: Used to put phone_data into a usable format for plotting and filtering
+#Sourced in server.R and Plots.R so that they can have access to reformatted phone_data
+
+#Neccesary Libraries
 library(dplyr)
 library(stringi)
 
@@ -5,23 +9,20 @@ library(stringi)
 #We reformatted data for two purposes: 
   #1: Making it quantifiable thus graphable 
   #2: Making it Filterable 
-#
-###########################GENERAL NOTES ABOUT DATA WRANGLING############################################
-#use baseline r regx
 
-#DATA <- read.csv("/Users/mikiaslema/Documents/INFO201/Projects/FinalProject/FinalProject-TuesdayNightWarriors/Data/phone_dataset.csv", quote = "", row.names = NULL, stringsAsFactors = FALSE)
-
-#Format data
+#-------------Reading in data-------------------------
 phone_data <- read.csv("Data/phone_dataset.csv", quote = "", row.names = NULL, stringsAsFactors = FALSE) %>%
   mutate(CPU = gsub('4x', "", CPU), CPU = gsub('2x', "", CPU), CPU = gsub('3x', "", CPU))
 
+#-------------firstNum Function--------------------------------
 #Function which takes in a column of phone specs
 #Returns the column only containing the first number of each string
 firstNum <- function(column) {
   return(as.numeric(stri_extract_first_regex(column, "[0.0-9.0]+")))
 } 
 
-#Reformatting the data to make it quantifiable 
+#-----Reformatting the data to make it quantifiable------------
+#Makes it possible to graph
 phone_data <- phone_data %>%  
   mutate("CPU_GHz"= firstNum(phone_data$CPU)) %>% 
   mutate("Memory_Card_GB"= firstNum(phone_data$memory_card)) %>%
@@ -33,8 +34,8 @@ phone_data <- phone_data %>%
   mutate("approx_price_USD" = approx_price_EUR*1.19) %>%
   mutate("Display_size" = firstNum(phone_data$display_size)) %>%
   mutate("Announced" = firstNum(phone_data$announced))
-  
-#All blanks and N/A values become NA
+
+#------All blanks and N/A values become NA--------------------
 phone_data[phone_data==""]<-NA
 phone_data[phone_data=="N/A"]<-NA
 phone_data[is.na(phone_data$Memory_Card_GB)] <- 0
